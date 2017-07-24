@@ -168,13 +168,13 @@ foreach($t1 as $value) {
 			
 				<div class="controls">
 					<? foreach($s1 as $s) { ?>
-						<? if ((is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == $s->getFileSetID())) { ?>
+						<? if (is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) { ?>
 						<label class="checkbox">
 						<input type="checkbox"  checked disabled><?=wordwrap($s->getFileSetName(), '23', '&shy;', true)?>
 						</label>
 						<? } ?>
 					<? } ?>
-					<? if ((is_array($searchRequest['fsID']) && in_array(-1, $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == '-1')) { ?>
+					<? if (is_array($searchRequest['fsID']) && in_array(-1, $searchRequest['fsID'])) { ?>					
 					<label class="checkbox">
 					<input type="checkbox"  checked disabled><?=t('Files in no sets.')?>
 					</label>
@@ -186,12 +186,20 @@ foreach($t1 as $value) {
 			<div class="input">
 				<select multiple name="fsID[]" class="chosen-select">
 					<optgroup label="<?=t('Sets')?>">
-					<? foreach($s1 as $s) { ?>
-						<option value="<?=$s->getFileSetID()?>"  <? if ((is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == $s->getFileSetID())) { ?> selected="selected" <? } ?>><?=wordwrap($s->getFileSetName(), '23', '&shy;', true)?></option>
+					<? foreach($s1 as $s) { 
+						$fsetName = $s->getFileSetName();
+						$i = 0;
+						$fsetName2 = array();
+						for($i=0; $i < mb_strlen($fsetName, "UTF-8"); $i+=23){
+							$fsetName2[] = mb_substr($fsetName, $i, 23, "UTF-8");
+						}
+						$fsetName2 = implode("-",$fsetName2);
+					?>
+						<option value="<?= $s->getFileSetID()?>"  <? if (is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) { ?> selected="selected" <? } ?>><?= $fsetName2; ?></option>
 					<? } ?>
 					</optgroup>
 					<optgroup label="<?=t('Other')?>">
-						<option value="-1" <? if ((is_array($searchRequest['fsID']) && in_array(-1, $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == '-1')) { ?> selected="selected" <? } ?>><?=t('Files in no sets.')?></option>
+						<option value="-1" <? if (is_array($searchRequest['fsID']) && in_array(-1, $searchRequest['fsID'])) { ?> selected="selected" <? } ?>><?=t('Files in no sets.')?></option>
 					</optgroup>
 				</select>
 			</div>
