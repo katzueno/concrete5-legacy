@@ -131,14 +131,14 @@ if ($_REQUEST['approveImmediately'] == 1) {
 		<div class="clearfix">
 		<label for="cHandle"><?php echo t('Canonical URL')?></label>
 		<div class="input">
-		<?  if (!$c->isGeneratedCollection()) { ?>
-			<? echo BASE_URL . DIR_REL;?><?  if (URL_REWRITING == false) { ?>/<? echo DISPATCHER_FILENAME?><?  } ?><? 
+		<?php  if (!$c->isGeneratedCollection()) { ?>
+			<?php echo BASE_URL . DIR_REL;?><?php  if (URL_REWRITING == false) { ?>/<?php echo DISPATCHER_FILENAME?><?php  } ?><?php 
 			$cPath = substr($c->cPath, strrpos($c->cPath, '/') + 1);
 			print htmlentities(substr($c->cPath, 0, strrpos($c->cPath, '/')),ENT_QUOTES,APP_CHARSET)?>/<input type="text" name="cHandle" value="<?= htmlentities($cPath,ENT_QUOTES,APP_CHARSET)?>" id="cHandle" maxlength="128"><input type="hidden" name="oldCHandle" id="oldCHandle" value="<?= htmlentities($c->getCollectionHandle(),ENT_QUOTES,APP_CHARSET)?>"><br /><br />
-		<?   } else { ?>
+		<?php } else { ?>
 			<?= $c->getCollectionHandle()?><br /><br />
-		<?   } ?>
-			<span class="help-block"><? echo t('This page must always be available from at least one URL. That URL is listed above.')?></span>
+		<?php } ?>
+			<span class="help-block"><?php echo t('This page must always be available from at least one URL. That URL is listed above.')?></span>
 		</div>
 		</div>
 		<?php } ?>
