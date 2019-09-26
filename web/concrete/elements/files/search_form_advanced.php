@@ -186,7 +186,7 @@ foreach($t1 as $value) {
 			<div class="input">
 				<select multiple name="fsID[]" class="chosen-select">
 					<optgroup label="<?=t('Sets')?>">
-					<? foreach($s1 as $s) { 
+					<?php foreach($s1 as $s) { 
 						$fsetName = $s->getFileSetName();
 						$i = 0;
 						$fsetName2 = array();
@@ -195,8 +195,8 @@ foreach($t1 as $value) {
 						}
 						$fsetName2 = implode("-",$fsetName2);
 					?>
-						<option value="<?=$s->getFileSetID()?>"  <? if ((is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == $s->getFileSetID())) { ?> selected="selected" <? } ?>><?= $fsetName2;?></option>
-					<? } ?>
+						<option value="<?=$s->getFileSetID()?>"  <?php if ((is_array($searchRequest['fsID']) && in_array($s->getFileSetID(), $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == $s->getFileSetID())) { ?> selected="selected" <?php } ?>><?= $fsetName2;?></option>
+					<?php } ?>
 					</optgroup>
 					<optgroup label="<?php echo t('Other')?>">
 						<option value="-1" <?php if ((is_array($searchRequest['fsID']) && in_array(-1, $searchRequest['fsID'])) || (is_string($searchRequest['fsID']) && $searchRequest['fsID'] == '-1')) { ?> selected="selected" <?php } ?>><?php echo t('Files in no sets.')?></option>
